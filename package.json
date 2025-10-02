@@ -4,6 +4,6 @@
     "concurrently": "^9.2.1"
   },
   "scripts": {
-    "dev": "concurrently \"bun --cwd packages/client dev\" \"python packages/server/app.py\""
+        "dev": "concurrently \"bun --cwd packages/client dev\" \"./packages/server/venv/bin/python ./packages/server/app.py\""
   }
 }
