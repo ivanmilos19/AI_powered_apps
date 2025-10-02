@@ -1,11 +1,14 @@
 {
-   "dependencies": {},
-   "devDependencies": {
-      "concurrently": "^9.2.1",
-      "prettier": "^3.6.2"
-   },
-   "scripts": {
-      "dev": "concurrently \"bun --cwd packages/client dev\" \"./packages/server/venv/bin/python ./packages/server/app.py\"",
-      "format": "prettier --write ."
-   }
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.3",
+    "prettier": "^3.6.2"
+  },
+  "scripts": {
+    "dev": "concurrently \"bun --cwd packages/client dev\" \"./packages/server/venv/bin/python ./packages/server/app.py\"",
+    "format": "prettier --write .",
+    "prepare": "husky"
+  }
 }
