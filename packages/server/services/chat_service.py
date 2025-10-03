@@ -19,7 +19,7 @@ class ChatService:
             model="gpt-4o-mini",
             input=prompt,
             temperature=0.2,
-            max_output_tokens=200,  
+            max_output_tokens=1000,  
             previous_response_id=conversationRepository.getLastResponseId(conversationId),
         )
 
