@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from database.models import Review, Summary
 
 
@@ -31,4 +31,8 @@ class reviewsRepository:
 
     @staticmethod
     async def get_review_summary(product_id: int):
-        return await Summary.get_or_none(product_id=product_id)
+        now_utc = datetime.now(timezone.utc)
+        summary_obj = await Summary.filter(
+            product_id=product_id, expires_at__gt=now_utc
+        ).first()
+        return summary_obj.content if summary_obj else None

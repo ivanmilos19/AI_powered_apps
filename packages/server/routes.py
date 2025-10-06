@@ -24,6 +24,7 @@ async def chat_endpoint(req: ChatRequest):
 async def reviews_endpoint(id: int):
     return await ReviewController.getReviews(id)
 
+
 @router.post("/api/products/{id}/reviews/summarize")
 async def summarize_reviews_endpoint(id: int):
     return await ReviewController.summarizeReviews(id)

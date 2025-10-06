@@ -1,4 +1,3 @@
-from datetime import datetime, timezone
 from fastapi import HTTPException
 from pathlib import Path
 from repositories.reviews_repository import reviewsRepository
@@ -24,7 +23,7 @@ class ReviewService:
                 status_code=404, detail="No reviews found for this product"
             )
 
-        return [
+        reviews = [
             {
                 "author": r.author,
                 "rating": r.rating,
@@ -33,12 +32,16 @@ class ReviewService:
             }
             for r in reviews
         ]
+        
+        summary = await reviewsRepository.get_review_summary(product_id)
+        
+        return {'summary': summary, 'reviews': reviews  }
 
     @staticmethod
     async def summarize_reviews(product_id: int):
         existing_summary = await reviewsRepository.get_review_summary(product_id)
-        if existing_summary and existing_summary.expires_at > datetime.now(timezone.utc):
-            return existing_summary.content
+        if existing_summary:
+            return existing_summary
 
         reviews = await reviewsRepository.get_reviews_by_product(product_id, 10)
         reviews_text = "".join([r.content for r in reviews])
