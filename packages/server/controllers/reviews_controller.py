@@ -9,3 +9,7 @@ class ReviewController:
             return await ReviewService.get_reviews_for_product(id)
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Error: {e}")
+
+    @staticmethod
+    async def summarizeReviews(id: int):
+       return await ReviewService.summarize_reviews(id)

@@ -1,5 +1,6 @@
-from repositories.reviews_repository import reviewsRepository
 from fastapi import HTTPException
+from repositories.reviews_repository import reviewsRepository
+from llm.client import generate_text
 
 
 class ReviewService:
@@ -25,3 +26,19 @@ class ReviewService:
             }
             for r in reviews
         ]
+
+    @staticmethod
+    async def summarize_reviews(product_id: int):
+
+        reviews = await reviewsRepository.get_reviews_by_product(product_id, 10)
+        reviews_text = "".join([r.content for r in reviews])
+        prompt = f"Summarize the following customer reviews into a short paragraph hilighting key themes, both positive and negative: {reviews_text}"
+
+        response = generate_text(
+            model="gpt-4o-mini",
+            input=prompt,
+            temperature=0.2,
+            max_output_tokens=500,
+        )
+
+        return response["text"]
