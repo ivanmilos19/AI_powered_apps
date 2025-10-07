@@ -7,7 +7,7 @@
     "prettier": "^3.6.2"
   },
   "scripts": {
-    "dev": "concurrently \"bun --cwd packages/client dev\" \"cd packages/server && ./venv/bin/python -m uvicorn app:app --reload --host 0.0.0.0 --port 3000\"",
+    "dev": "concurrently \"cd packages/client && bun run dev:reviews\" \"cd packages/client && bun run dev:chatbot\" \"cd packages/server && ./venv/bin/python -m uvicorn app:app --reload --host 0.0.0.0 --port 3000\"",
     "format": "prettier --write .",
     "prepare": "husky"
   }
